@@ -12,6 +12,31 @@ Standard Load Balancer outbound rules allocate a fixed number of SNAT ports per 
 
 ## Architecture
 
+```mermaid
+flowchart TD
+    subgraph ScenarioA["Scenario A: Load Balancer Outbound"]
+        VMA[Backend VM] --> LB[Standard Load Balancer]
+        LB --> LBPIP["1 Public IP\n= 1,024 ports/VM"]
+        LBPIP --> IA((Internet))
+    end
+
+    subgraph ScenarioB["Scenario B: NAT Gateway"]
+        VMB[Backend VM] --> NATGW[NAT Gateway]
+        NATGW --> NATPIP["1 Public IP\n= ~64,000 ports"]
+        NATPIP --> IB((Internet))
+    end
+
+    Warning["⚠ SNAT Exhaustion\nunder load"] -.- ScenarioA
+    Success["✓ Scales dynamically\nno exhaustion"] -.- ScenarioB
+
+    style LB fill:#FDE7E9,stroke:#D13438
+    style NATGW fill:#DFF6DD,stroke:#107C10
+    style Warning fill:#FDE7E9,stroke:#D13438
+    style Success fill:#DFF6DD,stroke:#107C10
+```
+
+> **Key Insight:** LB divides 64K ports statically across backend pool (64K ÷ VMs = ports/VM). NAT Gateway allocates dynamically from the full ~64K pool per IP.
+
 | Resource | Purpose |
 |----------|---------|
 | VNet (10.230.0.0/16) | Lab network |

@@ -12,6 +12,35 @@ The egress decision point is: **NAT Gateway vs Firewall vs default Internet rout
 
 ## Architecture
 
+```mermaid
+flowchart TD
+    subgraph VNet["VNet 10.200.0.0/16"]
+        subgraph WorkloadSubnet["Workload Subnet"]
+            VM[Linux VM]
+        end
+        subgraph FWSubnet["AzureFirewallSubnet"]
+            FW[Azure Firewall]
+        end
+        NAT[NAT Gateway + Public IP]
+    end
+
+    UDR["UDR: 0.0.0.0/0 → Firewall IP"]
+    Internet((Internet))
+    FWPIP[Firewall Public IP]
+
+    VM -->|"When UDR active"| UDR
+    UDR -->|Forces traffic| FW
+    FW --> FWPIP --> Internet
+    VM -.->|"When UDR removed"| NAT
+    NAT -.-> Internet
+
+    style FW fill:#FDE7E9,stroke:#D13438
+    style NAT fill:#DFF6DD,stroke:#107C10
+    style UDR fill:#FFF4CE,stroke:#F7630C
+```
+
+> **Egress Priority:** UDR (→ Firewall) > NAT Gateway > Default Internet
+
 | Resource | Purpose |
 |----------|---------|
 | VNet (10.200.0.0/16) | Lab network |
