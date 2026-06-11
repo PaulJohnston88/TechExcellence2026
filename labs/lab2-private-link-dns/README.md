@@ -12,7 +12,7 @@ This lab shows that Private Link adoption is **fundamentally DNS-driven**. A Pri
 
 ## Architecture
 
-![Architecture Diagram](./architecture.svg)
+![Architecture Diagram](./architecture.png)
 
 | Resource | Purpose |
 |----------|---------|

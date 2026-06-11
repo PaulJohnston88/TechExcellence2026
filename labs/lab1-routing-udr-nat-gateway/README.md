@@ -12,7 +12,7 @@ The egress decision point is: **NAT Gateway vs Firewall vs default Internet rout
 
 ## Architecture
 
-![Architecture Diagram](./architecture.svg)
+![Architecture Diagram](./architecture.png)
 
 | Resource | Purpose |
 |----------|---------|

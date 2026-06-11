@@ -12,7 +12,7 @@ This lab provides two side-by-side VMs — one with Accelerated Networking enabl
 
 ## Architecture
 
-![Architecture Diagram](./architecture.svg)
+![Architecture Diagram](./architecture.png)
 
 | Resource | Purpose |
 |----------|---------|

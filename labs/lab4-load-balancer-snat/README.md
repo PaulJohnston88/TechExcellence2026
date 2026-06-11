@@ -12,7 +12,7 @@ Standard Load Balancer outbound rules allocate a fixed number of SNAT ports per 
 
 ## Architecture
 
-![Architecture Diagram](./architecture.svg)
+![Architecture Diagram](./architecture.png)
 
 | Resource | Purpose |
 |----------|---------|

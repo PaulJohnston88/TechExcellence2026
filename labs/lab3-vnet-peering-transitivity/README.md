@@ -12,7 +12,7 @@ This lab demonstrates that **VNet peering is non-transitive**. Even though Spoke
 
 ## Architecture
 
-![Architecture Diagram](./architecture.svg)
+![Architecture Diagram](./architecture.png)
 
 | Resource | Purpose |
 |----------|---------|
