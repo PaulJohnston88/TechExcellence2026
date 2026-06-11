@@ -1,4 +1,4 @@
-# Lab 2 – Private Link & DNS Resolution
+# Lab 3 – Private Link & DNS Resolution
 
 ## Scenario
 

@@ -1,4 +1,4 @@
-# Lab 3 – VNet Peering Transitivity
+# Lab 2 – VNet Peering Transitivity
 
 ## Scenario
 
