@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0078D4"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#107C10"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#D13438"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="480" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#333">Lab 3: VNet Peering &amp; Transitivity</text>
+
+  <!-- Hub VNet -->
+  <rect x="300" y="70" width="360" height="220" rx="12" fill="none" stroke="#0078D4" stroke-width="2"/>
+  <text x="320" y="95" font-size="14" fill="#0078D4" font-weight="bold">Hub VNet (10.220.0.0/16)</text>
+
+  <!-- NVA -->
+  <rect x="380" y="140" width="200" height="80" rx="8" fill="#FDE7E9" stroke="#D13438" stroke-width="2"/>
+  <text x="480" y="172" text-anchor="middle" font-size="13" font-weight="bold" fill="#D13438">NVA (Linux VM)</text>
+  <text x="480" y="193" text-anchor="middle" font-size="11" fill="#555">IP Forwarding Enabled</text>
+  <text x="480" y="210" text-anchor="middle" font-size="11" fill="#555">10.220.1.4</text>
+
+  <!-- Spoke A VNet -->
+  <rect x="40" y="400" width="340" height="200" rx="12" fill="none" stroke="#107C10" stroke-width="2"/>
+  <text x="60" y="425" font-size="14" fill="#107C10" font-weight="bold">Spoke A VNet (10.221.0.0/16)</text>
+
+  <!-- Spoke A VM -->
+  <rect x="100" y="460" width="200" height="70" rx="8" fill="#DFF6DD" stroke="#107C10" stroke-width="2"/>
+  <text x="200" y="495" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Spoke A VM</text>
+  <text x="200" y="515" text-anchor="middle" font-size="11" fill="#555">10.221.1.4</text>
+
+  <!-- Spoke B VNet -->
+  <rect x="580" y="400" width="340" height="200" rx="12" fill="none" stroke="#F7630C" stroke-width="2"/>
+  <text x="600" y="425" font-size="14" fill="#F7630C" font-weight="bold">Spoke B VNet (10.222.0.0/16)</text>
+
+  <!-- Spoke B VM -->
+  <rect x="660" y="460" width="200" height="70" rx="8" fill="#FFF4CE" stroke="#F7630C" stroke-width="2"/>
+  <text x="760" y="495" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Spoke B VM</text>
+  <text x="760" y="515" text-anchor="middle" font-size="11" fill="#555">10.222.1.4</text>
+
+  <!-- Peering Lines (bidirectional) -->
+  <!-- Spoke A ↔ Hub -->
+  <line x1="220" y1="400" x2="400" y2="290" stroke="#0078D4" stroke-width="2.5"/>
+  <text x="260" y="335" font-size="11" fill="#0078D4" font-weight="bold">Peering ✓</text>
+
+  <!-- Spoke B ↔ Hub -->
+  <line x1="740" y1="400" x2="560" y2="290" stroke="#0078D4" stroke-width="2.5"/>
+  <text x="660" y="335" font-size="11" fill="#0078D4" font-weight="bold">Peering ✓</text>
+
+  <!-- Blocked direct path (Spoke A → Spoke B) -->
+  <line x1="340" y1="490" x2="580" y2="490" stroke="#D13438" stroke-width="3" stroke-dasharray="8,5"/>
+  <!-- X mark in the middle -->
+  <circle cx="460" cy="490" r="18" fill="#fff" stroke="#D13438" stroke-width="2"/>
+  <text x="460" y="496" text-anchor="middle" font-size="16" font-weight="bold" fill="#D13438">✗</text>
+  <text x="460" y="530" text-anchor="middle" font-size="12" fill="#D13438" font-weight="bold">BLOCKED (Non-Transitive)</text>
+
+  <!-- Working path via NVA (green) -->
+  <path d="M 200 460 C 200 350, 380 320, 420 220" fill="none" stroke="#107C10" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <path d="M 540 180 C 600 320, 760 350, 760 455" fill="none" stroke="#107C10" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="150" y="360" font-size="11" fill="#107C10" font-weight="bold">UDR →</text>
+  <text x="150" y="375" font-size="11" fill="#107C10" font-weight="bold">NVA</text>
+  <text x="770" y="370" font-size="11" fill="#107C10" font-weight="bold">NVA →</text>
+  <text x="770" y="385" font-size="11" fill="#107C10" font-weight="bold">Forward</text>
+
+  <!-- Key Insight Box -->
+  <rect x="40" y="630" width="880" height="70" rx="8" fill="#FDE7E9" stroke="#D13438" stroke-width="2"/>
+  <text x="480" y="658" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">KEY INSIGHT: VNet Peering is Non-Transitive</text>
+  <text x="480" y="682" text-anchor="middle" font-size="13" fill="#555">Spoke A ↔ Hub ↔ Spoke B ≠ Spoke A ↔ Spoke B. Use NVA + UDRs to enable spoke-to-spoke.</text>
+</svg>

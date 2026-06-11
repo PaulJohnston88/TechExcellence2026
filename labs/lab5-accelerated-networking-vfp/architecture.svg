@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 700" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#D13438"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#107C10"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="480" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#333">Lab 5: Accelerated Networking &amp; VFP Offload</text>
+
+  <!-- Divider -->
+  <line x1="480" y1="60" x2="480" y2="540" stroke="#ccc" stroke-width="1" stroke-dasharray="4"/>
+  <text x="480" y="565" text-anchor="middle" font-size="12" fill="#999">VS</text>
+
+  <!-- === LEFT: Standard Networking === -->
+  <rect x="40" y="60" width="410" height="500" rx="12" fill="none" stroke="#D13438" stroke-width="2"/>
+  <text x="245" y="88" text-anchor="middle" font-size="15" font-weight="bold" fill="#D13438">Standard Networking</text>
+  <text x="245" y="106" text-anchor="middle" font-size="11" fill="#555">(Software Data Path)</text>
+
+  <!-- Stack: VM App -->
+  <rect x="100" y="140" width="280" height="60" rx="8" fill="#CFE4FA" stroke="#0078D4" stroke-width="2"/>
+  <text x="240" y="175" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">VM Application</text>
+
+  <!-- Arrow -->
+  <path d="M 240 200 L 240 225" fill="none" stroke="#D13438" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Stack: vSwitch -->
+  <rect x="100" y="230" width="280" height="60" rx="8" fill="#E8DAEF" stroke="#8764B8" stroke-width="2"/>
+  <text x="240" y="260" text-anchor="middle" font-size="13" font-weight="bold" fill="#8764B8">Hyper-V vSwitch</text>
+  <text x="240" y="278" text-anchor="middle" font-size="11" fill="#555">Host CPU processes packets</text>
+
+  <!-- Arrow -->
+  <path d="M 240 290 L 240 315" fill="none" stroke="#D13438" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Stack: VFP Software -->
+  <rect x="100" y="320" width="280" height="60" rx="8" fill="#FFF4CE" stroke="#F7630C" stroke-width="2"/>
+  <text x="240" y="350" text-anchor="middle" font-size="13" font-weight="bold" fill="#F7630C">VFP (Software – CPU)</text>
+  <text x="240" y="368" text-anchor="middle" font-size="11" fill="#555">NSG, UDR, LB rules in software</text>
+
+  <!-- Arrow -->
+  <path d="M 240 380 L 240 405" fill="none" stroke="#D13438" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Stack: Physical NIC -->
+  <rect x="100" y="410" width="280" height="60" rx="8" fill="#E8E8E8" stroke="#495057" stroke-width="2"/>
+  <text x="240" y="445" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Physical NIC</text>
+
+  <!-- Metrics -->
+  <text x="245" y="510" text-anchor="middle" font-size="12" fill="#D13438" font-weight="bold">⬆ Higher latency</text>
+  <text x="245" y="530" text-anchor="middle" font-size="12" fill="#D13438" font-weight="bold">⬆ CPU overhead</text>
+  <text x="245" y="548" text-anchor="middle" font-size="11" fill="#555">Every packet processed by host CPU</text>
+
+  <!-- === RIGHT: Accelerated Networking === -->
+  <rect x="510" y="60" width="410" height="500" rx="12" fill="none" stroke="#107C10" stroke-width="2"/>
+  <text x="715" y="88" text-anchor="middle" font-size="15" font-weight="bold" fill="#107C10">Accelerated Networking</text>
+  <text x="715" y="106" text-anchor="middle" font-size="11" fill="#555">(SR-IOV Hardware Path)</text>
+
+  <!-- Stack: VM App -->
+  <rect x="570" y="140" width="280" height="60" rx="8" fill="#CFE4FA" stroke="#0078D4" stroke-width="2"/>
+  <text x="710" y="175" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">VM Application</text>
+
+  <!-- Arrow -->
+  <path d="M 710 200 L 710 225" fill="none" stroke="#107C10" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+  <!-- Stack: SR-IOV VF -->
+  <rect x="570" y="230" width="280" height="60" rx="8" fill="#DFF6DD" stroke="#107C10" stroke-width="2"/>
+  <text x="710" y="260" text-anchor="middle" font-size="13" font-weight="bold" fill="#107C10">SR-IOV Virtual Function</text>
+  <text x="710" y="278" text-anchor="middle" font-size="11" fill="#555">Direct DMA – bypasses host</text>
+
+  <!-- Arrow -->
+  <path d="M 710 290 L 710 315" fill="none" stroke="#107C10" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+  <!-- Stack: VFP Hardware -->
+  <rect x="570" y="320" width="280" height="60" rx="8" fill="#DFF6DD" stroke="#107C10" stroke-width="2"/>
+  <text x="710" y="350" text-anchor="middle" font-size="13" font-weight="bold" fill="#107C10">VFP (HW Offload – NIC)</text>
+  <text x="710" y="368" text-anchor="middle" font-size="11" fill="#555">NSG, UDR, LB rules in NIC ASIC</text>
+
+  <!-- Arrow -->
+  <path d="M 710 380 L 710 405" fill="none" stroke="#107C10" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+  <!-- Stack: Physical NIC -->
+  <rect x="570" y="410" width="280" height="60" rx="8" fill="#E8E8E8" stroke="#495057" stroke-width="2"/>
+  <text x="710" y="445" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Physical NIC</text>
+
+  <!-- Metrics -->
+  <text x="715" y="510" text-anchor="middle" font-size="12" fill="#107C10" font-weight="bold">⬇ Lower latency</text>
+  <text x="715" y="530" text-anchor="middle" font-size="12" fill="#107C10" font-weight="bold">⬇ Zero CPU overhead</text>
+  <text x="715" y="548" text-anchor="middle" font-size="11" fill="#555">Host CPU completely bypassed</text>
+
+  <!-- Key Insight Box -->
+  <rect x="40" y="590" width="880" height="80" rx="8" fill="#DFF6DD" stroke="#107C10" stroke-width="2"/>
+  <text x="480" y="618" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">KEY INSIGHT: AccelNet Uses SR-IOV to Bypass the Host</text>
+  <text x="480" y="640" text-anchor="middle" font-size="13" fill="#555">VFP policy rules (NSGs, UDRs, LB) are offloaded to the SmartNIC hardware.</text>
+  <text x="480" y="660" text-anchor="middle" font-size="12" fill="#777">Result: Lower latency, higher throughput, reduced host CPU utilization. No config changes needed.</text>
+</svg>

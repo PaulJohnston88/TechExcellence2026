@@ -12,31 +12,7 @@ This lab shows that Private Link adoption is **fundamentally DNS-driven**. A Pri
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    subgraph VNet["VNet 10.210.0.0/16"]
-        subgraph VMSubnet["VM Subnet"]
-            VM[Linux VM]
-        end
-        subgraph PESubnet["PE Subnet"]
-            PE["Private Endpoint\n10.210.2.4"]
-        end
-    end
-
-    DNS["Private DNS Zone\nprivatelink.blob.core.windows.net"]
-    Storage["Azure Storage Account\n(public access disabled)"]
-
-    VM -->|"1. DNS query"| DNS
-    DNS -->|"2. Returns private IP"| VM
-    VM -->|"3. Data path (private)"| PE
-    PE -->|"4. Private backbone"| Storage
-
-    style PE fill:#E8DAEF,stroke:#8764B8
-    style Storage fill:#DFF6DD,stroke:#107C10
-    style DNS fill:#CFE4FA,stroke:#0078D4
-```
-
-> **Key:** DNS resolves `storageacct.blob.core.windows.net` → Private IP via the Private DNS Zone. Traffic never leaves the Azure backbone.
+![Architecture Diagram](./architecture.svg)
 
 | Resource | Purpose |
 |----------|---------|

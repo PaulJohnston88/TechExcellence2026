@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8764B8"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0078D4"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="480" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="#333">Lab 2: Private Link &amp; DNS Resolution</text>
+
+  <!-- VNet Container -->
+  <rect x="40" y="70" width="420" height="440" rx="12" fill="none" stroke="#0078D4" stroke-width="2"/>
+  <text x="60" y="95" font-size="14" fill="#0078D4" font-weight="bold">VNet (10.210.0.0/16)</text>
+
+  <!-- VM Subnet -->
+  <rect x="60" y="110" width="380" height="150" rx="8" fill="#F3F9FF" stroke="#0078D4" stroke-width="1" stroke-dasharray="4"/>
+  <text x="80" y="135" font-size="12" fill="#555">VM Subnet (10.210.1.0/24)</text>
+
+  <!-- VM -->
+  <rect x="130" y="160" width="200" height="70" rx="8" fill="#CFE4FA" stroke="#0078D4" stroke-width="2"/>
+  <text x="230" y="195" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Linux VM</text>
+  <text x="230" y="215" text-anchor="middle" font-size="11" fill="#555">nslookup / curl test host</text>
+
+  <!-- PE Subnet -->
+  <rect x="60" y="290" width="380" height="150" rx="8" fill="#F8F3FC" stroke="#8764B8" stroke-width="1" stroke-dasharray="4"/>
+  <text x="80" y="315" font-size="12" fill="#555">Private Endpoint Subnet (10.210.2.0/24)</text>
+
+  <!-- Private Endpoint -->
+  <rect x="130" y="340" width="220" height="70" rx="8" fill="#E8DAEF" stroke="#8764B8" stroke-width="2"/>
+  <text x="240" y="370" text-anchor="middle" font-size="13" font-weight="bold" fill="#8764B8">Private Endpoint</text>
+  <text x="240" y="390" text-anchor="middle" font-size="11" fill="#555">NIC: 10.210.2.4</text>
+
+  <!-- Storage Account -->
+  <rect x="560" y="120" width="350" height="100" rx="8" fill="#DFF6DD" stroke="#107C10" stroke-width="2"/>
+  <text x="735" y="155" text-anchor="middle" font-size="14" font-weight="bold" fill="#107C10">Azure Storage Account</text>
+  <text x="735" y="175" text-anchor="middle" font-size="12" fill="#555">Blob Service</text>
+  <text x="735" y="195" text-anchor="middle" font-size="11" fill="#777">Public network access: Disabled</text>
+
+  <!-- Private DNS Zone -->
+  <rect x="560" y="300" width="350" height="90" rx="8" fill="#CFE4FA" stroke="#0078D4" stroke-width="2"/>
+  <text x="735" y="335" text-anchor="middle" font-size="13" font-weight="bold" fill="#0078D4">Private DNS Zone</text>
+  <text x="735" y="355" text-anchor="middle" font-size="12" fill="#555">privatelink.blob.core.windows.net</text>
+  <text x="735" y="375" text-anchor="middle" font-size="11" fill="#777">A Record → 10.210.2.4</text>
+
+  <!-- VNet Link -->
+  <rect x="600" y="430" width="270" height="50" rx="6" fill="#F3F9FF" stroke="#0078D4" stroke-width="1"/>
+  <text x="735" y="460" text-anchor="middle" font-size="12" fill="#0078D4">VNet Link (auto-registration)</text>
+
+  <!-- Flow arrows -->
+  <!-- Step 1: VM → DNS query -->
+  <path d="M 330 185 L 555 340" fill="none" stroke="#0078D4" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
+  <rect x="380" y="240" width="120" height="22" rx="4" fill="#fff" stroke="none"/>
+  <text x="440" y="255" text-anchor="middle" font-size="11" fill="#0078D4" font-weight="bold">① DNS Query</text>
+
+  <!-- Step 2: DNS returns IP (implied by DNS zone content) -->
+  <text x="735" y="410" text-anchor="middle" font-size="11" fill="#0078D4">② Returns 10.210.2.4</text>
+
+  <!-- Step 3: Data path VM → PE → Storage -->
+  <path d="M 240 230 L 240 335" fill="none" stroke="#8764B8" stroke-width="2.5" marker-end="url(#arrow-purple)"/>
+  <text x="260" y="285" font-size="11" fill="#8764B8" font-weight="bold">③ Connect</text>
+
+  <path d="M 350 375 L 555 170" fill="none" stroke="#8764B8" stroke-width="2.5" marker-end="url(#arrow-purple)"/>
+  <text x="490" y="290" font-size="11" fill="#8764B8" font-weight="bold">④ Private backbone</text>
+
+  <!-- Key Insight Box -->
+  <rect x="40" y="540" width="880" height="90" rx="8" fill="#CFE4FA" stroke="#0078D4" stroke-width="2"/>
+  <text x="480" y="570" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">KEY INSIGHT: Private Link is DNS-Driven</text>
+  <text x="480" y="595" text-anchor="middle" font-size="13" fill="#555">DNS resolves storageacct.blob.core.windows.net → 10.210.2.4 (Private IP) via Private DNS Zone</text>
+  <text x="480" y="618" text-anchor="middle" font-size="12" fill="#777">Without the DNS zone: resolves to public IP → traffic goes over Internet even with PE present</text>
+</svg>

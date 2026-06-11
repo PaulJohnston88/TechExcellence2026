@@ -12,33 +12,7 @@ This lab provides two side-by-side VMs — one with Accelerated Networking enabl
 
 ## Architecture
 
-```mermaid
-flowchart TD
-    subgraph Standard["Standard Networking"]
-        direction TB
-        APP1[VM Application] --> VS1[Hyper-V vSwitch]
-        VS1 --> VFP1["VFP (Software - CPU)"]
-        VFP1 --> NIC1[Physical NIC]
-    end
-
-    subgraph Accelerated["Accelerated Networking (SR-IOV)"]
-        direction TB
-        APP2[VM Application] --> SRIOV[SR-IOV Virtual Function]
-        SRIOV --> VFP2["VFP (HW Offload - NIC)"]
-        VFP2 --> NIC2[Physical NIC]
-    end
-
-    Standard --- R1["Higher latency\nCPU overhead"]
-    Accelerated --- R2["Lower latency\nBypasses host CPU"]
-
-    style VFP1 fill:#FFF4CE,stroke:#F7630C
-    style VFP2 fill:#DFF6DD,stroke:#107C10
-    style SRIOV fill:#DFF6DD,stroke:#107C10
-    style R1 fill:#FDE7E9,stroke:#D13438
-    style R2 fill:#DFF6DD,stroke:#107C10
-```
-
-> **Key Insight:** AccelNet uses SR-IOV to bypass the host vSwitch. VFP policy rules are offloaded to NIC hardware = lower latency, higher throughput, reduced CPU.
+![Architecture Diagram](./architecture.svg)
 
 | Resource | Purpose |
 |----------|---------|

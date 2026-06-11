@@ -12,30 +12,7 @@ This lab demonstrates that **VNet peering is non-transitive**. Even though Spoke
 
 ## Architecture
 
-```mermaid
-flowchart TD
-    subgraph Hub["Hub VNet 10.220.0.0/16"]
-        NVA["NVA (Linux VM)\nIP Forwarding Enabled"]
-    end
-    subgraph SpokeA["Spoke A VNet 10.221.0.0/16"]
-        VMA[Spoke A VM]
-    end
-    subgraph SpokeB["Spoke B VNet 10.222.0.0/16"]
-        VMB[Spoke B VM]
-    end
-
-    VMA <-->|"Peering"| Hub
-    Hub <-->|"Peering"| VMB
-    VMA x--x|"BLOCKED\n(non-transitive)"| VMB
-    VMA -->|"UDR → NVA"| NVA
-    NVA -->|"Forwards to"| VMB
-
-    style NVA fill:#FDE7E9,stroke:#D13438
-    style VMA fill:#DFF6DD,stroke:#107C10
-    style VMB fill:#FFF4CE,stroke:#F7630C
-```
-
-> **Key Insight:** VNet peering is **non-transitive**. Spoke A ↔ Hub and Spoke B ↔ Hub does NOT mean Spoke A ↔ Spoke B. Route through an NVA with UDRs.
+![Architecture Diagram](./architecture.svg)
 
 | Resource | Purpose |
 |----------|---------|
